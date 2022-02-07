@@ -1,9 +1,16 @@
 const { Router } = require('express');
+const passport = require('passport');
 
 const router = Router();
 
-router.get('/login', (req, res) => {
-  res.send('login');
-});
+router.get('/', passport.authenticate('discord'));
+
+router.get(
+  '/redirect',
+  passport.authenticate('discord', {
+    successRedirect: '/dashboard',
+    failureRedirect: '/',
+  })
+);
 
 module.exports = router;
