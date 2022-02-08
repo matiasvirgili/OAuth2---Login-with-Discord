@@ -5,6 +5,7 @@ const MONGODB_URI = process.env.MONGODB_URI;
 const SECRET = process.env.SECRET || 'some random secret';
 const DISCORD_CLIENT_ID = process.env.DISCORD_CLIENT_ID;
 const DISCORD_CLIENT_SECRET = process.env.DISCORD_CLIENT_SECRET;
+const DISCORD_CLIENT_REDIRECT = process.env.DISCORD_CLIENT_REDIRECT;
 
 module.exports = {
   PORT,
@@ -12,4 +13,5 @@ module.exports = {
   SECRET,
   DISCORD_CLIENT_ID,
   DISCORD_CLIENT_SECRET,
+  DISCORD_CLIENT_REDIRECT,
 };

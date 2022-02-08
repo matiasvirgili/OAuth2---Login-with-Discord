@@ -1,4 +1,8 @@
-const { DISCORD_CLIENT_ID, DISCORD_CLIENT_SECRET } = require('../config');
+const {
+  DISCORD_CLIENT_ID,
+  DISCORD_CLIENT_SECRET,
+  DISCORD_CLIENT_REDIRECT,
+} = require('../config');
 const User = require('../models/User');
 const passport = require('passport');
 const { Strategy } = require('passport-discord');
@@ -17,7 +21,7 @@ passport.use(
     {
       clientID: DISCORD_CLIENT_ID,
       clientSecret: DISCORD_CLIENT_SECRET,
-      callbackURL: '/auth/redirect',
+      callbackURL: DISCORD_CLIENT_REDIRECT,
       scope: ['identify', 'guilds'],
     },
     async (accesToken, refreshToken, profile, done) => {
@@ -32,9 +36,7 @@ passport.use(
           guilds: profile.guilds,
         });
 
-        console.log(newUser);
         await newUser.save();
-
         done(null, newUser);
       } catch (error) {
         console.log(error);
