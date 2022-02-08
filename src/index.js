@@ -1,9 +1,8 @@
 const app = require('./app');
 const { conexionBD } = require('./db');
+const { PORT } = require('./config');
 
-const port = process.env.PORT;
-
-app.listen(port, async () => {
-  console.log(`Server is running on port:${port}`);
+app.listen(PORT, async () => {
+  console.log(`Server is running on port:${PORT}`);
   await conexionBD();
 });

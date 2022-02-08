@@ -26,13 +26,14 @@ passport.use(
 
         if (user) return done(null, user);
 
-        console.log(profile);
         const newUser = new User({
           discordId: profile.id,
           username: profile.username,
           guilds: profile.guilds,
         });
-        // await newUser.save();
+
+        console.log(newUser);
+        await newUser.save();
 
         done(null, newUser);
       } catch (error) {
