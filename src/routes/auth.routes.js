@@ -1,9 +1,10 @@
 const { Router } = require('express');
 const passport = require('passport');
+const { isNotAuthorized, isAuthorized } = require('../helpers/auth');
 
 const router = Router();
 
-router.get('/', passport.authenticate('discord'));
+router.get('/', isNotAuthorized, passport.authenticate('discord'));
 
 router.get(
   '/redirect',
@@ -13,4 +14,8 @@ router.get(
   })
 );
 
+router.get('/logout', isAuthorized, (req, res) => {
+  req.logout();
+  res.redirect('/');
+});
 module.exports = router;

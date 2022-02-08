@@ -2,8 +2,8 @@ const express = require('express');
 const path = require('path');
 const session = require('express-session');
 const passport = require('passport');
-
-require('./strategies/discordStrategy');
+const MongoStore = require('connect-mongo');
+const { MONGODB_URI, SECRET } = require('./config');
 
 //Routes
 const routeIndex = require('./routes/index.routes');
@@ -12,6 +12,8 @@ const routeDashboard = require('./routes/dashboard.routes');
 
 const app = express();
 
+require('./strategies/discordStrategy');
+
 //Settings
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
@@ -19,9 +21,16 @@ app.set('views', path.join(__dirname, 'views'));
 //Midlewares
 app.use(
   session({
-    secret: 'some secret',
+    secret: SECRET,
+    name: 'Matias Virgili',
     saveUninitialized: false,
     resave: false,
+    store: MongoStore.create({
+      mongoUrl: MONGODB_URI,
+    }),
+    cookie: {
+      maxAge: 60000 * 60 * 24,
+    },
   })
 );
 app.use(passport.initialize());
